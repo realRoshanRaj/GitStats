@@ -69,7 +69,7 @@
       ],
       langLabels: [],
       options: {
-        legend: {display: true, position: 'right', fontColor: '#ffffff'},
+        legend: {display: true, position: 'right', labels: {fontColor: '#ffffff'}},
         title: {text: 'Languages', display: true, fontColor: '#ffffff', fontSize: 16,},
         tooltips: {
           callbacks: {

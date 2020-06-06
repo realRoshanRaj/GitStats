@@ -7,14 +7,10 @@
           <a class="white--text" target="_blank" :href="userPageURL"><h2>{{name}}</h2></a>
         </v-card>
       </v-col>
-<!--      <v-spacer></v-spacer>-->
+      <!--      <v-spacer></v-spacer>-->
       <v-col cols="6">
-        <chartjs-doughnut
-          :bind="true"
-          :datasets="datasets"
-          :labels="labels"
-          :option="{}"
-        />
+        <Doughnut :dataset="datasets" :labels="labels"
+                  :options="options"/>
       </v-col>
     </v-row>
   </v-container>
@@ -22,8 +18,12 @@
 
 <script>
   import axios from 'axios';
+  import Doughnut from "../../components/Doughnut";
 
   export default {
+    components: {
+      Doughnut
+    },
     async asyncData({params}) {
       const {data} = await axios.get(('https://api.github.com/users/' + params.id));
       console.log(data);
@@ -40,10 +40,11 @@
       datasets: [
         {
           data: [100, 20, 40],
-          backgroundColor: ["#f36e60", "#ffdb3b", "#185190"],
+          // backgroundColor: ["#f36e60", "#ffdb3b", "#185190"],
         }
       ],
-      labels: ["Foo", "Bar", "Baz"]
+      labels: ["Foo", "Bar", "Baz"],
+      options: {legend: {display: false}, title: {text: 'Languages', display: true, fontColor: '#ef0fef', fontSize: 16}}
     }),
     methods: {}
 

@@ -25,7 +25,6 @@
         "#00ffff",
         "#f0ffff",
         "#f5f5dc",
-        "#000000",
         "#0000ff",
         "#a52a2a",
         "#00ffff",
@@ -78,15 +77,11 @@
 
     methods: {
       shuffle(arr) {
-        var ctr = arr.length, temp, index;
+        let ctr = arr.length, temp, index;
 
-// While there are elements in the array
         while (ctr > 0) {
-// Pick a random index
           index = Math.floor(Math.random() * ctr);
-// Decrease ctr by 1
           ctr--;
-// And swap the last element with it
           temp = arr[ctr];
           arr[ctr] = arr[index];
           arr[index] = temp;

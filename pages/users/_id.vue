@@ -9,7 +9,7 @@
       </v-col>
       <!--      <v-spacer></v-spacer>-->
       <v-col cols="6">
-        <Doughnut :dataset="datasets" :labels="labels"
+        <Doughnut :dataset="langDatasets" :labels="langLabels"
                   :options="options"/>
       </v-col>
     </v-row>
@@ -29,7 +29,31 @@
       console.log(data);
       let name = data.name;
       if (name === null) name = data.login;
-      return {userId: params.id, pfpURL: data.avatar_url, name, userPageURL: data.html_url, data};
+      const {data: repos} = await axios.get(data.repos_url);
+      const langData = {};
+      for (let i = 0; i < repos.length; i++) {
+        const {data: lang} = await axios.get(repos[i].languages_url);
+        for (const prop in lang) {
+          if (langData.hasOwnProperty(prop)) {
+            langData[prop] += lang[prop];
+          } else {
+            langData[prop] = lang[prop]
+          }
+        }
+      }
+      const langDataset = [{
+        data: Object.values(langData)
+      }]
+      return {
+        userId: params.id,
+        pfpURL: data.avatar_url,
+        name,
+        userPageURL: data.html_url,
+        data,
+        repos,
+        langLabels: Object.keys(langData),
+        langDatasets: langDataset
+      };
     },
     data: () => ({
       userId: '',
@@ -37,14 +61,35 @@
       name: '',
       userPageURL: '',
       data: {},
-      datasets: [
+      repos: [],
+      langDatasets: [
         {
-          data: [100, 20, 40],
-          // backgroundColor: ["#f36e60", "#ffdb3b", "#185190"],
+          data: [],
         }
       ],
-      labels: ["Foo", "Bar", "Baz"],
-      options: {legend: {display: false}, title: {text: 'Languages', display: true, fontColor: '#ef0fef', fontSize: 16}}
+      langLabels: [],
+      options: {
+        legend: {display: true, position: 'right', fontColor: '#ffffff'},
+        title: {text: 'Languages', display: true, fontColor: '#ffffff', fontSize: 16,},
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              //get the concerned dataset
+              const dataset = data.datasets[tooltipItem.datasetIndex];
+              //calculate the total of this data set
+              const total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                return previousValue + currentValue;
+              });
+              //get the current items value
+              const currentValue = dataset.data[tooltipItem.index];
+              //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+              const percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+
+              return data['labels'][tooltipItem['index']] + ': ' + percentage + "%";
+            }
+          }
+        }
+      }
     }),
     methods: {}
 

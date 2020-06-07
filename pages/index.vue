@@ -2,7 +2,7 @@
   <v-layout>
     <v-flex class="text-center">
       <img
-        src=""
+        src="/logo.png"
         alt="Insert Logo Here"
         class="mb-5"
       >

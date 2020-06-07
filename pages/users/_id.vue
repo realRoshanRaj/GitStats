@@ -42,7 +42,8 @@
         }
       }
       const langDataset = [{
-        data: Object.values(langData)
+        data: Object.values(langData),
+        borderColor: '#000'
       }]
       return {
         userId: params.id,
@@ -71,24 +72,24 @@
       options: {
         legend: {display: true, position: 'right', labels: {fontColor: '#ffffff'}},
         title: {text: 'Languages', display: true, fontColor: '#ffffff', fontSize: 16,},
-        tooltips: {
-          callbacks: {
-            label: function (tooltipItem, data) {
-              //get the concerned dataset
-              const dataset = data.datasets[tooltipItem.datasetIndex];
-              //calculate the total of this data set
-              const total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
-                return previousValue + currentValue;
-              });
-              //get the current items value
-              const currentValue = dataset.data[tooltipItem.index];
-              //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
-              const percentage = Math.floor(((currentValue / total) * 100) + 0.5);
-
-              return data['labels'][tooltipItem['index']] + ': ' + percentage + "%";
-            }
-          }
-        }
+        // tooltips: {
+          // callbacks: {
+            // label: function (tooltipItem, data) {
+            //   //get the concerned dataset
+            //   const dataset = data.datasets[tooltipItem.datasetIndex];
+            //   //calculate the total of this data set
+            //   const total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+            //     return previousValue + currentValue;
+            //   });
+            //   //get the current items value
+            //   const currentValue = dataset.data[tooltipItem.index];
+            //   //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+            //   const percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+            //
+            //   return data['labels'][tooltipItem['index']] + ': ' + percentage + "%";
+            // }
+          // }
+        // }
       }
     }),
     methods: {}

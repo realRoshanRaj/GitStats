@@ -3,12 +3,14 @@
     <v-row>
       <v-col cols="3">
         <v-card color="transparent">
-          <v-img :src="pfpURL"></v-img>
-          <a class="white--text" target="_blank" :href="userPageURL"><h2>{{name}}</h2></a>
+          <a class="white--text" target="_blank" :href="userPageURL">
+            <v-img :src="pfpURL"></v-img>
+            <h2>{{name}}</h2>
+          </a>
         </v-card>
       </v-col>
       <!--      <v-spacer></v-spacer>-->
-      <v-col cols="6">
+      <v-col cols="9">
         <Doughnut :dataset="langDatasets" :labels="langLabels"
                   :options="options"/>
       </v-col>
@@ -73,22 +75,22 @@
         legend: {display: true, position: 'right', labels: {fontColor: '#ffffff'}},
         title: {text: 'Languages', display: true, fontColor: '#ffffff', fontSize: 16,},
         // tooltips: {
-          // callbacks: {
-            // label: function (tooltipItem, data) {
-            //   //get the concerned dataset
-            //   const dataset = data.datasets[tooltipItem.datasetIndex];
-            //   //calculate the total of this data set
-            //   const total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
-            //     return previousValue + currentValue;
-            //   });
-            //   //get the current items value
-            //   const currentValue = dataset.data[tooltipItem.index];
-            //   //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
-            //   const percentage = Math.floor(((currentValue / total) * 100) + 0.5);
-            //
-            //   return data['labels'][tooltipItem['index']] + ': ' + percentage + "%";
-            // }
-          // }
+        // callbacks: {
+        // label: function (tooltipItem, data) {
+        //   //get the concerned dataset
+        //   const dataset = data.datasets[tooltipItem.datasetIndex];
+        //   //calculate the total of this data set
+        //   const total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+        //     return previousValue + currentValue;
+        //   });
+        //   //get the current items value
+        //   const currentValue = dataset.data[tooltipItem.index];
+        //   //calculate the precentage based on the total and current item, also this does a rough rounding to give a whole number
+        //   const percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+        //
+        //   return data['labels'][tooltipItem['index']] + ': ' + percentage + "%";
+        // }
+        // }
         // }
       }
     }),

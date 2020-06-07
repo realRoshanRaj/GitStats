@@ -26,7 +26,7 @@
     },
     async asyncData({params}) {
       const {data} = await axios.get(('https://api.github.com/users/' + params.id));
-      console.log(data);
+      // console.log(data);
       let name = data.name;
       if (name === null) name = data.login;
       const {data: repos} = await axios.get(data.repos_url);

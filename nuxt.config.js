@@ -92,8 +92,8 @@ export default {
     extend(config, ctx) {
     }
   },
-  // ...routerBase
-  router: {
-    base: '/GitStats/'
-  }
+  //...routerBase
+  // router: {
+  //   base: '/GitStats/'
+  // }
 }

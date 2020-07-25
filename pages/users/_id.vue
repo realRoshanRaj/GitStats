@@ -9,32 +9,42 @@
           </a>
         </v-card>
       </v-col>
-      <!--      <v-spacer></v-spacer>-->
-      <v-col cols="9">
+      <v-col cols="7">
         <Doughnut :dataset="langDatasets" :labels="langLabels"
                   :options="options"/>
       </v-col>
     </v-row>
+    <BarChart :label="'Commits Per Repo'" :labels="reposNames" :data="commitsPerRepo"
+              :options="{legend: {display: false,}, title: {display: true, text: 'Commits Per Repository', fontColor: '#ffffff', fontSize: 16,}}"/>
   </v-container>
 </template>
 
 <script>
   import axios from 'axios';
   import Doughnut from "../../components/Doughnut";
+  import BarChart from "../../components/BarChart";
 
   export default {
     components: {
-      Doughnut
+      Doughnut,
+      BarChart
     },
     async asyncData({params}) {
       const {data} = await axios.get(('https://api.github.com/users/' + params.id));
-      // console.log(data);
+      console.log(data);
       let name = data.name;
       if (name === null) name = data.login;
       const {data: repos} = await axios.get(data.repos_url);
+
+      // Lang Doughnut
       const langData = {};
+      const reposNames = [];
+      const commitsPerRepo = [];
       for (let i = 0; i < repos.length; i++) {
         const {data: lang} = await axios.get(repos[i].languages_url);
+        const {data: commits} = await axios.get(repos[i].url + `/commits?author=${data.login}`);
+        reposNames.push(repos[i].name);
+        commitsPerRepo.push(commits.length);
         for (const prop in lang) {
           if (langData.hasOwnProperty(prop)) {
             langData[prop] += lang[prop];
@@ -47,6 +57,8 @@
         data: Object.values(langData),
         borderColor: '#000'
       }]
+
+
       return {
         userId: params.id,
         pfpURL: data.avatar_url,
@@ -55,7 +67,9 @@
         data,
         repos,
         langLabels: Object.keys(langData),
-        langDatasets: langDataset
+        langDatasets: langDataset,
+        reposNames,
+        commitsPerRepo
       };
     },
     data: () => ({
@@ -92,7 +106,9 @@
         // }
         // }
         // }
-      }
+      },
+      reposNames: [],
+      commitsPerRepo: []
     }),
     methods: {}
 

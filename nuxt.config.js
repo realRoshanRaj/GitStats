@@ -22,7 +22,8 @@ export default {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
-    ]
+    ],
+
   },
   /*
   ** Customize the progress-bar color
@@ -52,6 +53,9 @@ export default {
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    ['@nuxtjs/google-adsense', {
+      id: 'ca-pub-2107378803843137'
+    }]
   ],
   /*
   ** Axios module configuration
